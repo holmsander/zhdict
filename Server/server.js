@@ -19,6 +19,15 @@ const pool = mysql.createPool({
   queueLimit: 0
 });
 
+pool.getConnection((err, connection) => {
+  if (err) {
+    console.error('Error connecting to database:', err);
+    return;
+  }
+  console.log('Successfully connected to MySQL database');
+  connection.release();
+});
+
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'User', 'HTML', 'index.html'));
 });
